@@ -16,12 +16,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ff0062;
+  background: #242424;
 }
 
 #main-header h1 {
   color: white;
   margin: 0;
+}
+
+#project-planner {
+  max-width: 900px;
+  display: flex;
+  margin: 0 auto 0 auto;
 }
 
 footer {
@@ -45,13 +51,13 @@ li {
 section {
   margin: 1rem auto;
   width: 40rem;
+  height: 80vh;
   max-width: 90%;
 }
 
 section ul {
   padding: 1rem;
-  max-height: 20rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 section > h2 {
@@ -92,11 +98,11 @@ button:active {
 }
 
 #active-projects {
-  border: 1px solid #870099;
+  border: 1px solid #535353;
 }
 
 #active-projects > header {
-  background: #870099;
+  background: #535353;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -110,6 +116,7 @@ button:active {
 
 #finished-projects {
   border: 1px solid #535353;
+  margin-left: 1rem;
 }
 
 #finished-projects > header {
