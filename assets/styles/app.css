@@ -51,7 +51,6 @@ li {
 section {
   margin: 1rem auto;
   width: 40rem;
-  height: 80vh;
   max-width: 90%;
 }
 
@@ -94,6 +93,7 @@ button:active {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
+  margin-top: 1rem;
   background: white;
 }
 
@@ -130,4 +130,14 @@ button:active {
 #finished-projects header h2 {
   color: white;
   margin: 0;
+}
+@media (max-width: 768px) {
+  #project-planner {
+    display: block;
+    margin: 0 auto 0 auto;
+  }
+
+  #finished-projects {
+    margin: 0 auto 0 auto;
+  }
 }
