@@ -80,6 +80,7 @@ class ProjectItem {
     this.updateProjectListsHandler = updateProjectListsFunction;
     this.connectMoreInfoButton();
     this.connectSwitchButton(type);
+    this.connectDrag();
   }
 
   deactivateTooltip() {
@@ -118,6 +119,13 @@ class ProjectItem {
     );
   }
 
+  connectDrag() {
+    document.getElementById(this.id).addEventListener('dragstart', (event) => {
+      event.dataTransfer.setData('text/plain', this.id);
+      event.dataTransfer.effectAllowed = 'move';
+    });
+  }
+
   update(updateProjectListsFn, type) {
     this.updateProjectListsHandler = updateProjectListsFn;
     this.connectSwitchButton(type);
@@ -131,6 +139,7 @@ class ProjectList {
   constructor(type) {
     this.type = type;
     this.setProjects();
+    this.connectDroppable();
   }
 
   setProjects() {
@@ -140,7 +149,42 @@ class ProjectList {
         new ProjectItem(prjItem.id, this.switchProject.bind(this), this.type)
       );
     }
-    console.log(this.projects);
+  }
+
+  connectDroppable() {
+    const list = document.querySelector(`#${this.type}-projects ul`);
+
+    list.addEventListener('dragenter', (event) => {
+      if (event.dataTransfer.types[0] === 'text/plain') {
+        list.parentElement.classList.add('droppable');
+        event.preventDefault();
+      }
+    });
+
+    list.addEventListener('dragover', (event) => {
+      if (event.dataTransfer.types[0] === 'text/plain') {
+        event.preventDefault();
+      }
+    });
+
+    list.addEventListener('dragleave', (event) => {
+      if (
+        event.relatedTarget.closest &&
+        event.relatedTarget.closest(`#${this.type}-projects ul`) !== list
+      ) {
+        list.parentElement.classList.remove('droppable');
+      }
+    });
+
+    list.addEventListener('drop', (event) => {
+      event.preventDefault();
+      const prjId = event.dataTransfer.getData('text/plain');
+      if (this.projects.find((project) => project.id === prjId)) {
+        list.parentElement.classList.remove('droppable');
+        return;
+      }
+      document.getElementById(prjId).querySelector('button:last-of-type').click();
+    });
   }
 
   setSwitchHandlerFunction(switchHandlerFunction) {
